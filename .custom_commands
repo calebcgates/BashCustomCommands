@@ -21,15 +21,15 @@ cc() {
 #####################  NPM  #################################
 #############################################################
 
-cc_nb() {
+ccnb() {
   npm run build "$@"
 }
 
-cc_nd() {
+ccnd() {
   npm run dev "$@"
 }
 
-cc_nds() {
+ccnds() {
   npm run dev-server "$@"
 }
 
@@ -37,7 +37,7 @@ cc_nds() {
 #####################  GIT  #################################
 #############################################################
 
-cc_gc() {
+ccgc() {
   if [ $# -eq 0 ]; then
     echo "Usage: cc gc <message>"
     return 1
@@ -45,11 +45,35 @@ cc_gc() {
   git commit -m "$*"
 }
 
-cc_gs() {
+ccgs() {
   git status
 }
 
+ccgp() {
+  git push
+}
 
+ccgpl() {
+  git pull
+}
+
+# Git checkout
+ccgc() {
+  if [ $# -eq 0 ]; then
+    echo "Usage: ccgc [-b] <branch_name>"
+    return 1
+  fi
+
+  if [ "$1" = "-b" ]; then
+    if [ $# -lt 2 ]; then
+      echo "Usage: ccgc -b <new_branch_name>"
+      return 1
+    fi
+    git checkout -b "${@:2}"
+  else
+    git checkout "$@"
+  fi
+}
 
 cc_example() {
   echo "This is an example command"
