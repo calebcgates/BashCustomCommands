@@ -1,0 +1,58 @@
+cc() {
+  if [ $# -eq 0 ]; then
+    echo "Usage: cc <command> [arguments]"
+    return 1
+  fi
+
+  local cmd="cc_$1"
+  shift
+
+  if type "$cmd" &>/dev/null; then
+    "$cmd" "$@"
+  else
+    echo "Command not found: cc $1"
+    return 1
+  fi
+}
+
+############################ Define your custom commands
+
+#############################################################
+#####################  NPM  #################################
+#############################################################
+
+cc_nb() {
+  npm run build "$@"
+}
+
+cc_nd() {
+  npm run dev "$@"
+}
+
+cc_nds() {
+  npm run dev-server "$@"
+}
+
+#############################################################
+#####################  GIT  #################################
+#############################################################
+
+cc_gc() {
+  if [ $# -eq 0 ]; then
+    echo "Usage: cc gc <message>"
+    return 1
+  fi
+  git commit -m "$*"
+}
+
+cc_gs() {
+  git status
+}
+
+
+
+cc_example() {
+  echo "This is an example command"
+}
+
+# Add more custom commands as needed
